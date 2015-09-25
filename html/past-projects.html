@@ -5,8 +5,11 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta charset="utf-8">
 	<link href="../css/bootstrap.min.css" rel="stylesheet" media="screen">
+	<style type="text/css">
+	  .affix {top: 20px;}
+	</style>
 </head>
-<body>
+<body  data-spy="scroll" data-target="#myScrollspy">
 	<div class="contianer">
 		<header>
 			<nav class="navbar navbar-inverse navbar-static-top" role="navigation" style="margin: 0;">
@@ -34,6 +37,8 @@
 			            <ul class="dropdown-menu">
 			               <li><a href="contact.html">Contact Information</a></li>
 			               <li><a href="namecard.html">E-BusinessCard</a></li>
+							<li class="divider"></li>
+			               <li><a href="https://github.com/ndsorrowchi">View me on Github</a></li>
 			               <li class="divider"></li>
 			               <li><a href="useful-links.html">Useful Links</a></li>
 			            </ul>
@@ -49,11 +54,20 @@
 		</div>	
 		<div class="row">
 			<div class="col-sm-3">
-				
+				<nav  id="myScrollspy">
+					<ul class="nav nav-pills nav-stacked" data-spy="affix" data-offset-top="280">
+						<li class="active"><a href="#panel1">Distributed Database Query Server</a></li>
+						<li><a href="#panel2">Mobile Game-like App</a></li>
+						<li><a href="#panel3">Snapshot app for Windows</a></li>
+						<li><a href="#panel4">Prototype GIS System</a></li>
+						<li><a href="#panel5">Digital Watermarking for Vector Data</a></li>
+						<li><a href="#panel6">GPA Calculator</a></li>
+					</ul>
+				</nav>				
 			</div>
 			<div class="col-sm-9">
 				<div class="panel-group">
-					<div class="panel panel-default">
+					<div class="panel panel-default" id="panel1">
 						<div class="panel-heading">
 							<h2 class="panel-title">
 								<a data-toggle="collapse" href="#collapse1" style="display:block;">
@@ -74,7 +88,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="panel panel-default">
+					<div class="panel panel-default" id="panel2">
 						<div class="panel-heading">
 							<h2 class="panel-title">
 								<a data-toggle="collapse" href="#collapse2" style="display:block;">
@@ -93,54 +107,97 @@
 							<div class="panel-footer">Watch group presentation video&nbsp;<a href="https://www.youtube.com/watch?v=x57LatMRoYM">on youtube</a></div>
 						</div>
 					</div>
-					<div class="panel panel-default">
+					<div class="panel panel-default"  id="panel3">
 						<div class="panel-heading">
 							<h2 class="panel-title">
 								<a data-toggle="collapse" href="#collapse3" style="display:block;">
-									Snapshot app for windows - Screenshot<small> - click to view</small>
+									Snapshot app for Windows - Screenshot<small> - click to view</small>
 								</a>
 							</h2>
 						</div>
 						<div id="collapse3" class="panel-collapse collapse">
 							<div class="panel-body">
 								<h4>Description</h4>
-								<p><b>This is a self-made app, not a class project.</b> When using Microsoft Windows, I discovered that the snapshot tool that the system provided is inconvenient for use. So I designed this program to solve this problem by optimizing continuous shooting operation, providing fast hotkeys and fast saving prosess.</p>
-								<p>The user can save the selected area on the screen as an image file or to the clipboard. When doing continuous shooting, the program can save the images to the folder set by the user and name each image automatically, avoiding many operations. Also, the app allows user to set an area of interest on the screen and only save the selected area. For example, you can set areaof interest to </p>
+								<p><b>This is a self-made app, not a class project.</b> When using Microsoft Windows, I discovered that the snapshot tool that the system provided is inconvenient for use. So I designed this program to solve this problem by optimizing continuous shooting operation, providing fast hotkeys and fast saving prosess. UI framework is MFC.</p>
+								<p>The user can save the selected area on the screen as an image file or to the clipboard. When doing continuous shooting, the program can save the images to the folder set by the user and name each image automatically, avoiding many operations. Also, the app allows user to set an area of interest on the screen and only save the selected area. For example, you can set area of interest to the browser display region.</p>
 								<h4><small>author</small></h4>
 								<hr/>
 								<img src="../img/snap-ui.jpg" class="img-responsive" style="max-width:100%;max-height:100%;" alt="a look of the app"></img>
 								<h5>Auto-name effect:</h5>
 								<img src="../img/snap-autoname.png" class="img-responsive" style="max-width:100%;max-height:100%;" alt="auto name result"></img>							
 							</div>
-							<div class="panel-footer">Chinese version available:<a href="https://drive.google.com/file/d/0B_GjnHvqg8KQX0NVdzFhcnpiX1E/view?usp=sharing">on google drive</a></div>
+							<div class="panel-footer">Chinese version available:<a href="https://drive.google.com/file/d/0B_GjnHvqg8KQRXNqeWx2N0VBVnM/view?usp=sharing">on google drive</a></div>
 						</div>
 					</div>
-					<div class="panel panel-default">
+					<div class="panel panel-default"  id="panel4">
 						<div class="panel-heading">
 							<h2 class="panel-title">
 								<a data-toggle="collapse" href="#collapse4" style="display:block;">
-									<small> - click to view</small>
+									Prototype GIS System<small> - click to view</small>
 								</a>
 							</h2>
 						</div>
 						<div id="collapse4" class="panel-collapse collapse">
-							<div class="panel-body">Panel Body</div>
-							<div class="panel-footer">Panel Footer</div>
+							<div class="panel-body">
+								<h4>Description</h4>
+								<p>In this project, a prototype GIS system with map layout and zoom functions, database functions and the map editing functions are implemented. The map layers (raster type or vector type) are overlayed and form a map. In this application, the user can create/connect to/disconnect to a geo-database, view or edit map layers (both vector layers and raster layers), and do searches. Project files are available and the map can be printed as an image.</p>
+								<p>UI framework: MFC.<br/>Database: Microsoft SQLServer.</p>
+								<h4><small>main designer and contributor (UI, map layout and zoom functions)</small></h4>
+								<hr/>
+								<img src="../img/gis-prototype-project-sm.jpg" class="img-responsive" style="max-width:100%;max-height:100%;" alt="a look of the app"></img>
+							</div>
+							<div class="panel-footer">Not available for download or details.</div>
 						</div>
 					</div>
-					<div class="panel panel-default">
+					<div class="panel panel-default"  id="panel5">
 						<div class="panel-heading">
 							<h2 class="panel-title">
 								<a data-toggle="collapse" href="#collapse5" style="display:block;">
-									Collapsible panel<small> - click to view</small>
+									Digital Watermarking for Gep-spatial Vector Data<small> - click to view</small>
 								</a>
 							</h2>
 						</div>
 						<div id="collapse5" class="panel-collapse collapse">
-							<div class="panel-body">Panel Body</div>
-							<div class="panel-footer">Panel Footer</div>
+							<div class="panel-body">
+								<h4>Description</h4>
+								<p>As the key data of GIS field, vector geo-spatial data is of great importance. To protect its copyright, watermarking vector geo-spatial data is an effective method. Two algorithms are implemented, a direct-insert algorithm and a DFT(Discrete Fourier Transform)-based algorithm.</p>
+								<p>By converting watermark image's pixel data to a binary sequence, we obtain our watermark sequence of zeros and ones. Then we select a subset of coordinates from the vector data and change those coordinates according to the bit depth set, the binary sequence is embedded in the vector data.</p>
+								<p>The program is designed as a plug-in package for MapGIS 10 platform. The plug-in contains two DLLs. The C# DLL contains the UI part and the C++ DLL contains the algorithm part.</p>
+								<h4><small>author</small></h4>
+								<hr/>
+								<h5>Main UI Based on Mapgis10<small>The left part of it is the map layer tree-control. The right part of it is the database view. The middle part is the map viewer.</small></h5>
+								<img src="../img/gis-wm-workspace.png" class="img-responsive" style="max-width:100%;max-height:100%;" alt="a look of the app"></img>
+								<h5>Inserting Watermark</h5>
+								<img src="../img/gis-wm-insert.png" class="img-responsive" style="max-width:100%;max-height:100%;" alt="a look of the insert module"></img>	
+								<h5>Verifying Watermark</h5>
+								<img src="../img/gis-wm-check.png" class="img-responsive" style="max-width:100%;max-height:100%;" alt="a look of the verify module"></img>
+								<h5>Progress Window (Multi-Threading)</h5>
+								<img src="../img/gis-wm-progress.png" class="img-responsive" style="max-width:100%;max-height:100%;" alt="a look of the progress window"></img>						
+							</div>
+							<div class="panel-footer">Not available for download or details.</div>
 						</div>
 					</div>
+					<div class="panel panel-default"  id="panel6">
+						<div class="panel-heading">
+							<h2 class="panel-title">
+								<a data-toggle="collapse" href="#collapse6" style="display:block;">
+									GPA Calculator with profile support<small> - click to view</small>
+								</a>
+							</h2>
+						</div>
+						<div id="collapse6" class="panel-collapse collapse">
+							<div class="panel-body">
+								<h4>Description</h4>
+								<p><b>This is a self-made app, not a class project.</b> A traditional calculator requires the user to type grade and credit of each course and to choose an internal algorism. Yet my calculator accepts profiles which contains GPA definitions. After defining the first time, the user can save the definition as a file and they can load this file directly next time.</p>
+								<p>Also, my calculator accepts TXT file containing academic record. As long as the user provides a TXT file with two columns (credit and grade) separated by Tab, the program can load the file and the grades and credits are added to the table. It’s easy and efficient. Users do not need to manually input (manual input is still supported, yet "load" function is more preferred).<small>(To generate this kind of TXT file quickly, you can paste the transcript onto an Excel sheet; then you delete all columns except the two containing grade and credits and all titles; full select the remaining and paste them onto a TXT.)</small></p>
+								<p>UI framework is MFC.</p>
+								<h4><small>author</small></h4>
+								<hr/>
+								<img src="../img/gpa-calc.png" class="img-responsive" style="max-width:100%;max-height:100%;" alt="a look of the app"></img>
+							</div>
+							<div class="panel-footer">English version available:<a href="https://drive.google.com/file/d/0B_GjnHvqg8KQYTFqb1ltQXFRWkE/view?usp=sharing">on google drive</a></div>
+						</div>
+					</div>					
 				</div>
 
 			</div>
@@ -168,10 +225,12 @@
 		               About<b class="caret"></b>
 		            </a>
 		            <ul class="dropdown-menu">
-			               <li><a href="contact.html">Contact Information</a></li>
-			               <li><a href="namecard.html">E-BusinessCard</a></li>
-			               <li class="divider"></li>
-			               <li><a href="useful-links.html">Useful Links</a></li>
+		               <li><a href="contact.html">Contact Information</a></li>
+		               <li><a href="namecard.html">E-BusinessCard</a></li>
+						<li class="divider"></li>
+		               <li><a href="https://github.com/ndsorrowchi">View me on Github</a></li>
+		               <li class="divider"></li>
+		               <li><a href="useful-links.html">Useful Links</a></li>
 		            </ul>
 		         </li>
 		      </ul>
