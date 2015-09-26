@@ -45,17 +45,55 @@
 			</nav>
 		</header>
 		<div class="jumbotron" style="background-color: DodgerBlue; color: white;">			
-		  	<h2 class="text-center">Ming Chi's Territory<br/>
+		  	<h2 class="text-center">Ming Chi's Useful Tools & Recommended Useful Links<br/>
 		  		<br/><small style="color: LightSteelBlue;">"Explore, discover, and learn."</small>
 		  	</h2>
 		</div>	
 		<div class="row">
 			<div class="col-sm-1"></div>
 			<div class="col-sm-10">
-				<a href="#" class="list-group-item active">Useful Links:</a>
-				<a href="https://www.google.com" class="list-group-item">Google</a>
-				<a href="http://html-online.com/editor/" class="list-group-item">Online html Editor</a>
-				<a href="http://www.planetb.ca/syntax-highlight-word" class="list-group-item">Online Code Syntax Highlighter, can be then pasted into Word</a>
+				<div class="panel-group">
+				  <div class="panel panel-success">
+				    <div class="panel-heading">
+				      <h4 class="panel-title">
+				        Ming's Toolset:
+				      </h4>
+				    </div>
+				  </div>
+				  <div class="panel panel-default">
+				    <div class="panel-heading">
+				      <h4 class="panel-title">
+				        <a data-toggle="collapse" style="display:block;" href="#collapse1">Text Compare</a>
+				      </h4>
+				    </div>
+				    <div id="collapse1" class="panel-collapse collapse">
+				      <div class="panel-body">
+						<form role="form">
+						<div class="form-group">
+						  <label for="text1">Text 1:</label>
+						  <input class="form-control" id="text1" placeholder="Paste Text Here">
+						</div>
+						<div class="form-group">
+						  <label for="text2">Text 2:</label>
+						  <input class="form-control" id="text2" placeholder="Paste Text Here">
+						</div>
+						<div class="checkbox">
+						  <label><input type="checkbox" id="ignore-space" value="abc"> Ignore white spaces such as space and line breaks</label>
+						</div>
+						<button type="button" id="text-compare-btn1" class="btn btn-primary">Submit</button>
+						<button type="button" id="text-compare-btn2" class="btn btn-warning">Clear</button>
+						</form>
+				      </div>
+				      <div class="panel-footer"><p id="text-compare-footer"></p></div>
+				    </div>
+				  </div>
+				</div>
+				<div>
+					<a href="#" class="list-group-item active">Useful Links:</a>
+					<a href="https://www.google.com" class="list-group-item">Google</a>
+					<a href="http://html-online.com/editor/" class="list-group-item">Online html Editor</a>
+					<a href="http://www.planetb.ca/syntax-highlight-word" class="list-group-item">Online Code Syntax Highlighter, can be then pasted into Word</a>
+				</div>
 			</div>
 			<div class="col-sm-1"></div>
 		</div>
@@ -94,11 +132,60 @@
 		   </div>
 		</nav>	
 	</div>
-
-	<script>
-
-	</script>
+</body>
 	<script src="../js/jquery-2.1.3.min.js"></script>
 	<script src="../js/bootstrap.min.js"></script>
-</body>
+	<script>
+		$("#text-compare-btn1").click(function(e){   
+			var checkbox = document.getElementById('ignore-space');
+			var checked=checkbox.checked;
+			var txt1=$("#text1").val()+"";
+			var txt2=$("#text2").val()+"";
+			//alert(typeof(txt1));
+			if(checked)
+			{
+				txt1=txt1.replace(/\s*/g,'');
+				txt2=txt2.replace(/\s*/g,'');	
+			}
+			var footer=document.getElementById("text-compare-footer");
+			if(footer.hasAttribute("class"))
+				{footer.removeAttribute("class");}
+			while(footer.hasChildNodes())
+				{var ele=footer.firstChild;footer.removeChild(ele);}
+			//<span class="glyphicon glyphicon-search"></span>
+			var icon=document.createElement("SPAN");
+			var txt=document.createTextNode("");
+			if(txt1==txt2)
+			{
+				icon.setAttribute("class","glyphicon glyphicon-ok");
+				footer.setAttribute("class","text-success");
+				txt.textContent="Input Match.";
+			}
+			else
+			{
+				icon.setAttribute("class","glyphicon glyphicon-remove");
+				footer.setAttribute("class","text-danger");
+				txt.textContent="Input do not match!";
+			}
+			footer.appendChild(icon);
+			footer.appendChild(txt);
+			
+			//alert(txt1);
+			//alert(checkbox.checked);//是否被选中  
+		});
+		$("#text-compare-btn2").click(function(e){   
+			var checkbox = document.getElementById('ignore-space');
+			checkbox.checked=false;
+			$("#text1").val("");
+			$("#text2").val("");	
+			var footer=document.getElementById("text-compare-footer");
+			if(footer.hasAttribute("class"))
+				{footer.removeAttribute("class");}
+			while(footer.hasChildNodes())
+				{var ele=footer.firstChild;footer.removeChild(ele);}		
+		});
+
+	</script>
+
+
 </html>
