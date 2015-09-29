@@ -82,6 +82,8 @@ body {margin-left: 0px; margin-top: 0px; margin-right: 0px; margin-bottom: }
 .form-textarea textarea
 {
 	margin:auto;
+    min-width: 90%;
+    max-width: 95%;
 	border-radius: 4px;
 }
 .form-textarea div {	text-align:center;}
