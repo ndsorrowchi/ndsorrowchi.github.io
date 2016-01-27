@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Ming Chi's Profile</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta charset="utf-8">
+	<link href="../css/bootstrap.min.css" rel="stylesheet" media="screen">
+	<script src="../js/jquery-2.1.3.min.js"></script>
+	<script src="../js/bootstrap.min.js"></script>
+</head>
+<body>
+	<div class="container">
+		<div>
+			<form onsubmit="return false">
+			<input type="text" id="tracking" name="trackingno">
+			<button id="go">check</button>
+			</form>
+		</div>
+		<div id="t"></div>
+	</div>
+
+	<script>
+		$('#go').click(function () {
+		    $.ajax({
+		        url: "https://www.usps.com/search.htm",
+		        data: "q="+$('#tracking').val(),
+		        type: "GET",
+		        crossDomain: true,
+		        success: function (data) {
+		            var success =  $(data).find("#success");
+					console.log('success');
+
+		        },
+		        error: function (xhr, status) {
+		            alert("Sorry, there was a problem!");
+		        },
+		        complete: function (xhr, status) {
+		            //$('#showresults').slideDown('slow')
+		        }
+		    });
+		});
+	</script>
+
+</body>
+</html>
