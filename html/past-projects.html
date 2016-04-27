@@ -16,6 +16,22 @@
 			#myScrollspy {display: none;}
 			/*.img-responsive img{max-width: 500%; max-height: 500%;}*/
 		}
+		  .carousel-inner > .item > img,
+		  .carousel-inner > .item > a > img {
+		      width: 80%;
+		      margin: auto;
+		  }
+		  
+		  .my-ind li{
+				background-color: #008cc9;
+			}
+
+			.my-ind .active {
+			  background-color: #006cb9;
+			}
+			.my-cap{
+				/*color: rgb(170,170,170);*/
+			}
 	</style>
 </head>
 <body  data-spy="scroll" data-target="#myScrollspy">
@@ -65,7 +81,8 @@
 			<div class="col-sm-3">
 				<nav  id="myScrollspy">
 					<ul class="nav nav-pills nav-stacked" data-spy="affix" data-offset-top="280">
-						<li class="active"><a href="#panel7">Online Chat System</a></li>
+						<li class="active"><a href="#panel8">Bookstore E-business System</a></li>
+						<li><a href="#panel7">Online Chat System</a></li>
 						<li><a href="#panel6">Distributed Database Query Server</a></li>
 						<li><a href="#panel5">Mobile Game-like App</a></li>
 						<li><a href="#panel4">Snapshot app for Windows</a></li>
@@ -77,11 +94,148 @@
 			</div>
 			<div class="col-sm-9">
 				<div class="panel-group">
+					<div class="panel panel-default" id="panel8">
+						<div class="panel-heading">
+							<h2 class="panel-title">
+								<a data-toggle="collapse" href="#collapse8" style="display:block;">
+									Bookstore E-business System 
+								</a>
+							</h2>
+						</div>
+						<div id="collapse8" class="panel-collapse collapse in">
+							<div class="panel-body">
+								<h4>Description</h4>
+								<p>This project is aimed at building a online shopping system with meaningful features. It has the ability to provide top-selling, complex search result and recommendation ("people bought this also bought"). Also, it provides a way for customers to chat with employees to get timely help. Plus, all users' passwords are stored as MD5 to prevent direct steal from db.</p>
+								<h4><small>main author</small></h4>
+								<h5>Keywords: Recommendation, Java Servlets, JSP, Database, Bootstrap, JQuery, javascript, Ajax, Html, Json, Bean</h5>
+								<hr/>
+								<p>Slides:</p>
+								<div id="myCarousel1" class="carousel slide" data-ride="carousel">
+									<!-- Indicators -->
+									<ol class="carousel-indicators my-ind" style="border: 0px;">
+										<li data-target="#myCarousel1" data-slide-to="0" class="active"></li>
+										<li data-target="#myCarousel1" data-slide-to="1"></li>
+										<li data-target="#myCarousel1" data-slide-to="2"></li>
+										<li data-target="#myCarousel1" data-slide-to="3"></li>
+										<li data-target="#myCarousel1" data-slide-to="4"></li>
+										<li data-target="#myCarousel1" data-slide-to="5"></li>
+										<li data-target="#myCarousel1" data-slide-to="6"></li>
+										<li data-target="#myCarousel1" data-slide-to="7"></li>
+										<li data-target="#myCarousel1" data-slide-to="8"></li>
+										<li data-target="#myCarousel1" data-slide-to="9"></li>
+										<li data-target="#myCarousel1" data-slide-to="10"></li>
+									</ol>
+
+									<!-- Wrapper for slides -->
+									<div class="carousel-inner" role="listbox">
+										<div class="item active">
+											<img class="img-responsive" src="../img/ebuz-index.png" alt="homepage"  />
+											<div class="carousel-caption my-cap">
+												<h3>Homepage</h3>
+												<p>The home page of the website.</p>
+											</div>
+										</div>
+
+										<div class="item">
+											<img class="img-responsive" src="../img/ebuz-login.png" alt="login"  />
+											<div class="carousel-caption my-cap">
+												<h3>User Login</h3>
+												<p>Prompt a dialog for user to login.</p>
+											</div>
+										</div>
+
+										<div class="item">
+											<img class="img-responsive" src="../img/ebuz-browse.png" alt="browse books"  />
+											<div class="carousel-caption my-cap">
+												<h3>Browse or search products</h3>
+												<p>Users can select books from certain category, and contain certain keywords.</p>
+											</div>
+										</div>
+
+										<div class="item">
+											<img class="img-responsive" src="../img/ebuz-search.png" alt="Search by keywords"  />
+											<div class="carousel-caption my-cap">
+												<h3>Supports Multiple Keywords</h3>
+												<p>Support keywords separated by space, sorted by relevance.</p>
+											</div>
+										</div>
+
+										<div class="item">
+											<img class="img-responsive" src="../img/ebuz-detail.png" alt="Item details"  />
+											<div class="carousel-caption my-cap">
+												<h3>Recommendation</h3>
+												<p>Recommend books that customers who bought the current book also bought, sorted by relevance.</p>
+											</div>
+										</div>
+
+										<div class="item">
+											<img class="img-responsive" src="../img/ebuz-cart.png" alt="shopping cart"  />
+											<div class="carousel-caption my-cap">
+												<h3>Shopping Cart</h3>
+												<p>Live shopping cart maintained in session.</p>
+											</div>
+										</div>
+
+										<div class="item">
+											<img class="img-responsive" src="../img/ebuz-confirm.png" alt="check out"  />
+											<div class="carousel-caption my-cap">
+												<h3>Check out and pay</h3>
+												<p>Check out, and pay for books in cart.</p>
+											</div>
+										</div>
+
+										<div class="item">
+											<img class="img-responsive" src="../img/ebuz-order-history.png" alt="order history"  />
+											<div class="carousel-caption my-cap">
+												<h3>Order History</h3>
+												<p>Past orders that users have placed.</p>
+											</div>
+										</div>
+
+										<div class="item">
+											<img class="img-responsive" src="../img/ebuz-faq.png" alt="frequently asked questions"  />
+											<div class="carousel-caption my-cap">
+												<h3>FAQ</h3>
+												<p>Frequently asked questions page to help users.</p>
+											</div>
+										</div>
+
+										<div class="item">
+											<img class="img-responsive" src="../img/ebuz-user-chat.png" alt="Contact service"  />
+											<div class="carousel-caption my-cap">
+												<h3>Live chat with service desk.</h3>
+												<p>Chat live with service representitives who helps solve problems.</p>
+											</div>
+										</div>
+
+										<div class="item">
+											<img class="img-responsive" src="../img/ebuz-employee-chat.png" alt="employee portal"  />
+											<div class="carousel-caption my-cap">
+												<h3>Employee Portal</h3>
+												<p>Employees should respond to users' service requests.</p>
+											</div>
+										</div>
+									</div>
+
+									<!-- Left and right controls -->
+									<a class="left carousel-control" href="#myCarousel1" role="button" data-slide="prev">
+										<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+										<span class="sr-only">Previous</span>
+									</a>
+									<a class="right carousel-control" href="#myCarousel1" role="button" data-slide="next">
+										<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+										<span class="sr-only">Next</span>
+									</a>
+								</div>								
+							</div>
+							<div class="panel-footer">Neatbeans Project Repository&nbsp;<a href="https://github.com/ndsorrowchi/EbuzFinal">on Github</a></div>
+						</div>
+					</div>
 					<div class="panel panel-default" id="panel7">
 						<div class="panel-heading">
 							<h2 class="panel-title">
 								<a data-toggle="collapse" href="#collapse7" style="display:block;">
-									Online Chat System<small> - click to view</small>
+									Online Chat System 
 								</a>
 							</h2>
 						</div>
@@ -90,19 +244,20 @@
 								<h4>Description</h4>
 								<p>This project is aimed at building a online chat system with friends feature. It has applied some restful APIs and Ajax is applied for online chat and friends list listening. Only Messages with newer timestamps are refreshed. User message and income message are displayed differently. Online and offline friends are displayed differently.</p>
 								<h4><small>author</small></h4>
+								<h5>Keywords: Rest APIs, Java Servlets, JSP, Database, Bootstrap, javascript, Ajax, Html, Json, Bean</h5>
 								<hr/>
 								<img src="../img/restsocial-search.png" class="img-responsive" alt="a look of the web-app"></img>
 								<img src="../img/restsocial-chat1.png" class="img-responsive" alt="a look of the chat module 1"></img>
 								<img src="../img/restsocial-chat2.png" class="img-responsive" alt="a look of the chat module 2"></img>
 							</div>
-							<div class="panel-footer">Neatbeans Project Repository&nbsp;<a href="https://www.youtube.com/watch?v=x57LatMRoYM">on Github</a></div>
+							<div class="panel-footer">Neatbeans Project Repository&nbsp;<a href="https://github.com/ndsorrowchi/RestfulChat">on Github</a></div>
 						</div>
 					</div>				
 					<div class="panel panel-default" id="panel6">
 						<div class="panel-heading">
 							<h2 class="panel-title">
 								<a data-toggle="collapse" href="#collapse6" style="display:block;">
-									Distributed Database Query Server using Facebook PrestoDB<small> - click to view</small>
+									Distributed Database Query Server using Facebook PrestoDB 
 								</a>
 							</h2>
 						</div>
@@ -111,6 +266,7 @@
 								<h4>Description</h4>
 								<p>This project is mainly about distributed database query. The restful server accepts a query from the web client, parse it into standard presto query, execute it and the result will be sent back to client and displayed as a table, or the result can be stored in the distributed database system as a new data source. Data are transferred in JSON format. Server programmed in Java.</p>
 								<h4><small>main contributor</small></h4>
+								<h5>Keywords: facebook prestoDB, Amazon AWS server, linux, Rest APIs, jersey in setty server, MySQL, Bootstrap, JQuery, knockout.js, javascript, Ajax, Html, Json, git </h5>
 								<hr/>
 								<img src="../img/questo.png" class="img-responsive" alt="a look of the web client"></img>
 							</div>
@@ -123,7 +279,7 @@
 						<div class="panel-heading">
 							<h2 class="panel-title">
 								<a data-toggle="collapse" href="#collapse5" style="display:block;">
-									Mobile Game-like App for Java Learning<small> - click to view</small>
+									Mobile Game-like App for Java Learning 
 								</a>
 							</h2>
 						</div>
@@ -132,6 +288,7 @@
 								<h4>Description</h4>
 								<p>This project is aimed at building a game-like android app for java learning. Users take each test to check their understanding about each topic. The users can track the progress and see how they are doing in each section. The back-end is a very complex adaptive learning system and actually the json data is huge. This app only uses few of them.</p>
 								<h4><small>back-end data simplifier & extractor</small></h4>
+								<h5>Keywords: Android, Java, Json</h5>
 								<hr/>
 								<img src="../img/mobileapp.png" class="img-responsive" alt="a look of the app"></img>
 							</div>
@@ -142,7 +299,7 @@
 						<div class="panel-heading">
 							<h2 class="panel-title">
 								<a data-toggle="collapse" href="#collapse4" style="display:block;">
-									Snapshot app for Windows - Screenshot<small> - click to view</small>
+									Snapshot app for Windows - Screenshot 
 								</a>
 							</h2>
 						</div>
@@ -153,6 +310,7 @@
 								<p>The user can save the selected area on the screen as an image file or to the clipboard. When doing continuous shooting, the program can save the images to the folder set by the user and name each image automatically, avoiding many operations. Also, the app allows user to set an area of interest on the screen and only save the selected area. For example, you can set area of interest to the browser display region.</p>
 								<p style="color:red">Please grant whole control to current user over the settings profile in the setup folder.</p>
 								<h4><small>author</small></h4>
+								<h5>Keywords: C++, MFC, Windows APIs</h5>
 								<hr/>
 								<img src="../img/snap-ui-new.jpg" class="img-responsive" alt="a look of the app"></img>
 								<h5>Auto-name effect:</h5>
@@ -165,7 +323,7 @@
 						<div class="panel-heading">
 							<h2 class="panel-title">
 								<a data-toggle="collapse" href="#collapse3" style="display:block;">
-									Prototype GIS System<small> - click to view</small>
+									Prototype GIS System 
 								</a>
 							</h2>
 						</div>
@@ -175,6 +333,7 @@
 								<p>In this project, a prototype GIS system with map layout and zoom functions, database functions and the map editing functions are implemented. The map layers (raster type or vector type) are overlayed and form a map. In this application, the user can create/connect to/disconnect to a geo-database, view or edit map layers (both vector layers and raster layers), and do searches. Project files are available and the map can be printed as an image.</p>
 								<p>UI framework: MFC.<br/>Database: Microsoft SQLServer.</p>
 								<h4><small>main designer and contributor (UI, map layout and zoom functions)</small></h4>
+								<h5>Keywords: GIS, C++, MFC, SQL Server, GDI, Computer Graphics</h5>
 								<hr/>
 								<img src="../img/gis-prototype-project-sm.jpg" class="img-responsive" alt="a look of the app"></img>
 							</div>
@@ -185,7 +344,7 @@
 						<div class="panel-heading">
 							<h2 class="panel-title">
 								<a data-toggle="collapse" href="#collapse2" style="display:block;">
-									Digital Watermarking for Gep-spatial Vector Data<small> - click to view</small>
+									Digital Watermarking for Gep-spatial Vector Data 
 								</a>
 							</h2>
 						</div>
@@ -196,6 +355,7 @@
 								<p>By converting watermark image's pixel data to a binary sequence, we obtain our watermark sequence of zeros and ones. Then we select a subset of coordinates from the vector data and change those coordinates according to the bit depth set, the binary sequence is embedded in the vector data.</p>
 								<p>The program is designed as a plug-in package for MapGIS 10 platform. The plug-in contains two DLLs. The C# DLL contains the UI part and the C++ DLL contains the algorithm part.</p>
 								<h4><small>author</small></h4>
+								<h5>Keywords: GIS, C#, C++, DLL, Plugin Development</h5>
 								<hr/>
 								<h5>Main UI Based on Mapgis10<small>The left part of it is the map layer tree-control. The right part of it is the database view. The middle part is the map viewer.</small></h5>
 								<img src="../img/gis-wm-workspace.png" class="img-responsive" alt="a look of the app"></img>
@@ -213,7 +373,7 @@
 						<div class="panel-heading">
 							<h2 class="panel-title">
 								<a data-toggle="collapse" href="#collapse1" style="display:block;">
-									GPA Calculator with profile support<small> - click to view</small>
+									GPA Calculator with profile support 
 								</a>
 							</h2>
 						</div>
@@ -224,6 +384,7 @@
 								<p>Also, my calculator accepts TXT file containing academic record. As long as the user provides a TXT file with two columns (credit and grade) separated by Tab, the program can load the file and the grades and credits are added to the table. It’s easy and efficient. Users do not need to manually input (manual input is still supported, yet "load" function is more preferred).<small>(To generate this kind of TXT file quickly, you can paste the transcript onto an Excel sheet; then you delete all columns except the two containing grade and credits and all titles; full select the remaining and paste them onto a TXT.)</small></p>
 								<p>UI framework is MFC.</p>
 								<h4><small>author</small></h4>
+								<h5>Keywords: C++, MFC</h5>
 								<hr/>
 								<img src="../img/gpa-calc.png" class="img-responsive" alt="a look of the app"></img>
 							</div>
