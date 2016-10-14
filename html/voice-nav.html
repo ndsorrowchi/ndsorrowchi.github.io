@@ -1,0 +1,503 @@
+<!doctype html>
+<html lang="en">
+   <head>
+        <title>get your directions</title>
+        <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+		<script src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
+        <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+        <script type="text/javascript" src="http://maps.google.com/maps/api/js?v=3&sensor=false&language=en&libraries=places"></script>
+        <style type="text/css">
+.ui-grid-a a{
+    float: left;
+}
+
+.ui-block-b{
+    margin: 12px 0px;
+}
+
+.ui-grid-a>.ui-block-a{
+    width: 80%;
+}
+
+.ui-grid-a>.ui-block-b{
+    width: 20%;
+}
+		</style>
+        <script type="text/javascript">
+
+            var map,
+                currentPosition,
+                directionsDisplay, 
+                directionsService;
+				var currentPositionMarker;
+				var geocoder;
+				var defaultcenter=new google.maps.LatLng(40.4474963,-79.9527023);
+				var markers=[];
+				var dirtext=[];
+			var uptodate=false;
+			var frmbox,tobox;
+			var autocomplete,autocomplete1;
+			
+			var recstr = "";
+			var depaddr="";
+			var desaddr="";
+			
+			var bid=0;
+		var first_char = /\S/;
+		function capitalize(s) {
+		  return s.replace(first_char, function(m) { return m.toUpperCase(); });
+		}
+		var recognizing=false;			var tmp="";
+		var recognition = new webkitSpeechRecognition();
+		recognition.continuous = true;
+		recognition.interimResults = true;
+		recognition.lang = 'en-US';
+		recognition.onstart = function() {
+		recognizing = true;
+				
+		tmp="";
+		
+		switch(bid)
+		{
+			case 1:$("#rec-depart").text("  finish  ");break;
+			case 2:$("#rec-destination").text("  finish  ");break;
+			case 3:$("#rec-method").text("  finish  ");break;
+			default:break;
+		};
+		}
+		recognition.onend =function(){//alert("no");
+		recognizing=false;
+				
+		switch(bid)
+		{
+			case 1:$("#rec-depart").text("voice input");$("#depart-from").val(tmp);break;
+			case 2:$("#rec-destination").text("voice input");$("#target-dest").val(tmp);break;
+			case 3:$("#rec-method").text("voice input");$("#mode").val(matchsel(tmp)).change();break;
+			default:break;
+		};
+		bid=0;
+		}
+		recognition.onresult = function(event) {
+		  if (event.results.length > 0) {
+			//q.value = event.results[0][0].transcript;
+			//q.form.submit();
+			var tmp2="";
+				for (var i = event.resultIndex; i < event.results.length; ++i) {
+				  if (event.results[i].isFinal) {
+					tmp += event.results[i][0].transcript;
+				  } else {
+					tmp2 += event.results[i][0].transcript;
+				  }
+				}
+				console.log(tmp);
+				//q.value = capitalize(tmp);
+				if(bid==1)
+				{$("#depart-from").val(tmp);}
+				else if(bid==2)
+				{$("#target-dest").val(tmp);}
+				else
+				{;}
+		  }
+	  }
+	  function matchsel(text)
+	  {
+		  var str="";
+		  if(text=="Driving"||text=="driving")
+		  {str="DRIVING";}
+		  else if(text=="Walking"||text=="walking")
+		  {str="WALKING";}
+		  else if(text=="Bicyling"||text=="bicyling")
+		  {str="BICYLING";}
+		  else if(text=="Transit"||text=="transit")
+		  {str="TRANSIT";}
+		  else
+		  {say("Cannot recognize travel method."); say("Reset to driving.");str="DRIVING";} 
+		  return str; 
+	  }
+	  function a()
+	  {
+	    if(!recognizing)
+			{recognition.start();}
+		else
+			{recognition.stop();}
+	  }
+			
+            function initialize(lat, lon)
+            {
+				var rendererOptions = {  draggable: true};
+                directionsDisplay = new google.maps.DirectionsRenderer(rendererOptions); 
+                directionsService = new google.maps.DirectionsService();
+ 				geocoder = new google.maps.Geocoder(); 
+                currentPosition = new google.maps.LatLng(lat, lon);
+
+                map = new google.maps.Map(document.getElementById('map_canvas'), {
+                   zoom: 15,
+                   center: currentPosition,
+                   mapTypeId: google.maps.MapTypeId.ROADMAP
+                 });
+
+                directionsDisplay.setMap(map);
+				
+				var addr="Pittsburgh";
+				
+				geocoder.geocode({
+				  "location": currentPosition
+				},
+				function(results, status) {
+				  if (status == google.maps.GeocoderStatus.OK)
+					{$("#depart-from").val(results[0].formatted_address);addr=results[0].formatted_address;}
+				  else
+					alert("Unable to retrieve your address");
+				});
+				
+				//$("#depart-from").val(addr);
+				//alert(addr);
+                 currentPositionMarker = new google.maps.Marker({
+                    position: currentPosition,
+                    map: map,
+                    title: "Current position"
+                });
+				
+                var infowindow = new google.maps.InfoWindow();
+                google.maps.event.addListener(currentPositionMarker, 'click', function() {
+                    infowindow.setContent("<p>Current Address:"+addr+"</p><p>Current position: latitude: " + lat +" longitude: " + lon+"</p>");
+                    infowindow.open(map, currentPositionMarker);
+                });;
+				
+				google.maps.event.addListener(directionsDisplay, 'directions_changed',function()
+				{
+					var index = directionsDisplay.getRouteIndex();
+					//alert(index.toString());
+					var drs = directionsDisplay.getDirections();
+					var droute = drs.routes[index];
+					var dlegs = droute.legs;
+					//alert("1");
+					var legfirst=dlegs[0];
+					//alert("2");
+					var leglast=dlegs[dlegs.length-1];
+					var steps=legfirst.steps;
+					//alert("3");
+					$("#depart-from").val(legfirst.start_address);
+					$("#target-dest").val(leglast.end_address);
+					//$("#results").show();
+					dirtext.splice(0,dirtext.length);
+					var time=legfirst.duration.text;
+					var dist=legfirst.distance.text;
+					//alert(time.toString());
+					for(var k=0;k<steps.length;k++)
+					{
+						var direct=steps[k].instructions;
+											
+						direct= direct.replace(/<\/?[^>]*>/g,'');
+						//alert(direct);
+						dirtext.push(direct);
+					}
+				});
+				//alert("0");
+				var dep=document.getElementById('depart-from');
+				var des=document.getElementById('target-dest');
+			 autocomplete = new google.maps.places.Autocomplete((dep));//,{ types: ['establishment'] }
+			  // When the user selects an address rom the dropdown,
+			  // populate the address fields in the form.
+			  google.maps.event.addListener(autocomplete, 'place_changed', function() {
+				 //alert("0");
+				    var place = autocomplete.getPlace();
+					if (!place.geometry) {
+					  return;
+					}
+					$("#depart-from").val(place.formatted_address);
+
+			  });			
+			 autocomplete1 = new google.maps.places.Autocomplete((des));//,{ types: ['establishment'] }
+			  // When the user selects an address rom the dropdown,
+			  // populate the address fields in the form.
+			  google.maps.event.addListener(autocomplete1, 'place_changed', function() {
+				 //alert("0");				    
+				 var place = autocomplete1.getPlace();
+					if (!place.geometry) {
+					  return;
+					}
+					$("#target-dest").val(place.formatted_address);
+			  });
+				$("input[type=text]").focus(
+					function() { 
+						 $(this).select(); 
+					}
+				 );
+				$("input[type=text]").mouseup(
+					function(e) { 
+						 e.preventDefault(); 
+					}
+				 );
+            }
+
+            function locError(error) {
+                // initialize map with a static predefined latitude, longitude
+               //defaultcenter.lat(),defaultcenter.lng()
+			   say("Cannot locate.");
+			   initialize(40.4474963,-79.9527023);
+			   
+            }
+
+            function locSuccess(position) {
+                initialize(position.coords.latitude, position.coords.longitude);
+            }
+
+            function calculateRoute() {
+
+                var targetDestination = $("#target-dest").val();
+				var departfrom=$("#depart-from").val();
+				var travelmode=$("#mode").val();
+				var modetext=$("#mode").find("option:selected").text();
+                if (departfrom && departfrom != '' && targetDestination && targetDestination != '') {
+                    var request = {
+                        origin:departfrom, 
+                        destination:targetDestination,
+						provideRouteAlternatives: true,
+                        travelMode: google.maps.DirectionsTravelMode[travelmode]
+                    };
+					
+                    directionsService.route(request, function(response, status) {
+                        if (status == google.maps.DirectionsStatus.OK) {
+                            //directionsDisplay.setPanel(document.getElementById("directions"));
+							directionsDisplay.setPanel(document.getElementById("pop-directions"));
+                            directionsDisplay.setDirections(response); 
+							currentPositionMarker.setMap(null);
+							uptodate=true;
+							$("#bymode").text("Travel by : "+modetext);
+							say("Directions calculated.");
+							say("See directions by clicking directions board.");
+                            /*
+                                var myRoute = response.routes[0].legs[0];
+                                for (var i = 0; i < myRoute.steps.length; i++) {
+                                    alert(myRoute.steps[i].instructions);
+                                }
+                            */
+                            //$("#results").show();
+							
+                        }
+                        else {
+							say("No routes found");
+							alert("No routes found");
+							//dirtext.clear();
+							dirtext.splice(0,dirtext.length);
+                            //$("#results").hide();
+                        }
+                    });
+                }
+                else {
+                    ;//$("#results").hide();
+                }
+				
+            }
+			
+			function locErr(error) {
+                // initialize map with a static predefined latitude, longitude
+               //defaultcenter.lat(),defaultcenter.lng()
+			   setloc(40.4474963,-79.9527023);
+			   say("Cannot locate.");
+            }
+
+            function locOk(position) {
+                setloc(position.coords.latitude, position.coords.longitude);
+            }
+			
+			function setloc(lat,long) {
+                currentPosition = new google.maps.LatLng(lat, long);
+				//alert("0");
+            }
+			
+			function say(str)
+			{
+				var msg = new SpeechSynthesisUtterance(str);
+				//msg.voice = speechSynthesis.getVoices().filter(function(voice) { return voice.name == 'Whisper'; })[0];
+				speechSynthesis.speak(msg);
+			}
+
+			function onReadDir()
+			{
+				var i=0;
+				while(i<dirtext.length)
+				{
+					say(dirtext[i]);
+					i=i+1;
+				}
+			}			
+			
+            $(document).live("pagebeforeshow", "#map_page", function() {
+                navigator.geolocation.getCurrentPosition(locSuccess, locError);
+            });
+
+            $(document).on('click', '#directions-button', function(e){
+                e.preventDefault();
+                calculateRoute();
+            });
+			//
+			
+			//
+            $(document).on('click', '#reverse-button', function(e){
+                e.preventDefault();
+                say("Origin and destination reversed.");//calculateRoute();
+				var loc1=$("#depart-from").val();
+				$("#depart-from").val($("#target-dest").val());
+				$("#target-dest").val(loc1);
+				
+            });
+            $(document).on('click', '#reset-button', function(e){
+                e.preventDefault();
+                //calculateRoute();
+				say("Setting origin as current location.");
+				if(geocoder==null){geocoder = new google.maps.Geocoder(); }
+		//currentPosition = new google.maps.LatLng(lat, lon);
+				navigator.geolocation.getCurrentPosition(locOk, locErr);
+				geocoder.geocode({
+				  "location": currentPosition
+				},
+				function(results, status) {
+				  if (status == google.maps.GeocoderStatus.OK)
+					{$("#depart-from").val(results[0].formatted_address);}
+				  else
+				  	{say("Unable to retrieve your address");
+					alert("Unable to retrieve your address");}
+				});
+            });
+			$(document).on('click', '#say-method', function(e){
+                e.preventDefault();
+				
+				var tmp="Your current travel method is"+$("#mode").find("option:selected").text()+".";
+				say(tmp);
+				tmp="You can change your travel method.";
+				say(tmp);
+				tmp="Driving, wakling, bicyling or transit.";
+				say(tmp);
+            });
+			$(document).on('click', '#say-depart', function(e){
+                e.preventDefault();
+				var hastext=$('#depart-from').val()!="";
+				var tmp="";
+				if(!hastext)
+				{
+					tmp="Select your origin.";say(tmp);
+				}
+				else
+				{
+					tmp="Your current origin is"+$("#depart-from").val()+".";say(tmp);
+				}
+
+            });
+			$(document).on('click', '#say-destination', function(e){
+                e.preventDefault();
+				var hastext=$('#target-dest').val()!="";
+				var tmp="Select your destination.";
+				if(!hastext)
+				{
+					tmp="Select your destination.";say(tmp);
+				}
+				else
+				{
+					tmp="Your current destination is"+$("#target-dest").val()+".";say(tmp);
+				}
+
+            });
+			$(document).on('click', '#rec-method', function(e){
+                e.preventDefault();
+				bid=3;
+				a();
+            });
+			$(document).on('click', '#rec-depart', function(e){
+                e.preventDefault();
+				bid=1;
+				a();
+            });
+			$(document).on('click', '#rec-destination', function(e){
+                e.preventDefault();
+				bid=2;
+				a();
+            });
+			$(document).on('click', '#speak-it', function(e){
+			
+                e.preventDefault();
+				onReadDir();
+            });
+        </script>
+    </head>
+    <body>
+        <div id="basic-map" data-role="page">
+            <div data-role="header" style="color:cyan;background:orange;"> 
+                <h3>Ming's Project3</h3>
+            </div>
+            <div data-role="content" style="color:white;background:#6CF;height:900px;">
+				<div class="ui-grid-a">
+            		<div class="ui-block-a">
+                    	<div data-role="fieldcontain">
+                            <label for="depart-from" >Depart From:</label>
+                            <input type="text" name="depart-from" id="depart-from" value=""  />
+                    	</div>
+                    </div>
+                    <div class="ui-block-b">
+						<a href="#" id="say-depart" data-inline="true" data-mini="true" class="ui-btn ui-corner-all ui-shadow ui-icon-audio ui-btn-icon-notext">say</a>
+						<a href="#" id="rec-depart" data-role="button" data-inline="true" data-mini="true" data-icon="comment">voice input</a>
+                    </div>
+				</div>  
+
+				<div class="ui-grid-a">
+            		<div class="ui-block-a">
+                    	<div data-role="fieldcontain">
+                    <label for="target-dest">Destination:</label>
+                    <input type="text" name="target-dest" id="target-dest" value="" />
+                        </div>
+                    </div>
+                    <div class="ui-block-b">
+						<a href="#" id="say-destination" data-inline="true" data-mini="true" class="ui-btn ui-corner-all ui-shadow ui-btn ui-icon-audio ui-btn-icon-notext">say</a>
+						<a href="#" id="rec-destination" data-inline="true" data-role="button" data-mini="true" data-icon="comment">voice input</a>
+                    </div>
+				</div>  
+				<div class="ui-grid-a">
+            		<div class="ui-block-a">
+                    	<div data-role="fieldcontain">
+                            <label for="mode" class="select">Travel method:</label>   
+                            <select name="select-choice-0" id="mode">
+                                <option value="DRIVING">Driving</option>
+                                <option value="WALKING">Walking</option>
+                                <option value="BICYCLING">Bicycling</option>
+                                <option value="TRANSIT">Transit</option>
+                            </select>
+                    	</div>
+                    </div>
+                    <div class="ui-block-b">
+                    <a href="#" id="say-method" data-inline="true" data-mini="true" class="ui-btn ui-corner-all ui-shadow ui-btn ui-icon-audio ui-btn-icon-notext">say</a>
+                    <a href="#" id="rec-method" data-inline="true" data-mini="true" data-role="button" data-icon="comment">voice input</a>
+                    </div>
+				</div>
+				<div data-role="fieldcontain" class="ui-content">
+                <a href="#" id="directions-button" data-role="button" data-inline="true" data-mini="true" data-icon="navigation">Get Directions</a>
+    			<a href="#myPopup" id="showdir" data-role="button" data-rel="popup" data-inline="true" data-mini="true" data-icon="bullets">Directions Board</a>   
+                <a href="#" id="reset-button" data-role="button" data-inline="true" data-mini="true" data-icon="location">Navigate Yourself</a>
+                <a href="#" id="reverse-button" data-role="button" data-inline="true" data-mini="true" data-icon="recycle">Reverse</a>
+                </div>
+              	<div data-role="popup" id="myPopup" class="ui-content" style="width:auto;height:auto">
+                  <a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn ui-icon-delete ui-btn-icon-notext ui-btn-right">Close</a>
+                  <form method="post">
+                  	<div>
+                    	<label id="bymode"></label><button id="speak-it" >Read Directions</button> 
+                    </div>
+                    <div id="pop-directions">
+						
+                    </div>
+                  </form>
+                </div>   
+                <div class="ui-bar-c ui-shadow ui-content" style="height:55%;padding:0.5em;">
+                    <div class="ui-content"  id="map_canvas" style="height:90%;color:black;"></div><!--250px;"  "#myPopup"-->
+                </div>     
+             <!--   <div id="results" style="display:none;">
+                    <div id="directions"></div>
+                </div>
+            </div>
+			-->
+            <a href="#" onclick="$.mobile.silentScroll(0)" data-role="button" data-icon="arrow-u" data-mini="true">back to top</a>
+        </div>
+
+    
+    </body>
+</html>
